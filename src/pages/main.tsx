@@ -19,6 +19,10 @@ export default function MainPage() {
         <p onClick={() => navigate('/r3f/portal')} className={'border-2'}>
           (r3f) Portal 페이지 이동
         </p>
+
+        <p onClick={() => navigate('/r3f/particle')} className={'border-2'}>
+          (r3f) Particle 페이지 이동
+        </p>
       </div>
     </div>
   )
