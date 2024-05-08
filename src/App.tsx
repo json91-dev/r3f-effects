@@ -6,6 +6,7 @@ import NotFoundPage from '@src/pages/nofFound.tsx'
 const MainPage = lazy(() => import('@src/pages/main.tsx'))
 const BoxPage = lazy(() => import('@src/pages/r3f/box.tsx'))
 const BubblePage = lazy(() => import('@src/pages/r3f/bubble/bubble.tsx'))
+const FlagPage = lazy(() => import('@src/pages/r3f/frag/flag.tsx'))
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
       <Route element={<ArCanvasLayout />}>
         <Route path={'/r3f/box'} element={<BoxPage />} />
         <Route path={'/r3f/bubble'} element={<BubblePage />} />
+        <Route path={'/r3f/portal'} element={<FlagPage />} />
       </Route>
       <Route path='/*' element={<NotFoundPage />} />
     </Routes>
