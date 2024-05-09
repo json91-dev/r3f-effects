@@ -1,20 +1,24 @@
-import starParticleTexture from '@static/images/star.particle.png'
-import { useTexture } from '@react-three/drei'
+import starParticleTexture from '@static/images/star.particle.origin.png'
+import starModel from '@static/models/star.glb'
+import { Environment, useGLTF, useTexture } from '@react-three/drei'
 import { useEffect, useRef } from 'react'
 import { dtr, randomIntBetween, randomNumBetween } from '@src/utils/utils.tsx'
 import * as THREE from 'three'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 
 const count = 100 // 파티클 갯수
 export default function StarParticles() {
+  const { scene: modelScene }: any = useGLTF(starModel)
+  const { scene } = useThree()
   const texture: any = useTexture(starParticleTexture)
-
   const groupRef = useRef<THREE.Group>(null!)
-  const instances = useRef<Particle[]>([])
+  const instances = useRef<Star[]>([])
 
   useEffect(() => {
+    scene.background = new THREE.Color('black')
+
     for (let i = 0; i < count; i++) {
-      const particleInstance = new Particle(texture)
+      const particleInstance = new Star(texture)
 
       const mesh = particleInstance.create()
       groupRef.current.add(mesh)
@@ -31,16 +35,23 @@ export default function StarParticles() {
   useFrame(() => {
     instances.current.forEach((instance) => {
       instance.update()
-      if (instance.isCenter()) {
+      if (instance.isOutside()) {
         instance.setRandomPosition()
       }
     })
   })
 
-  return <group ref={groupRef} rotation={[dtr(-40), 0, 0]} position={[0, -0.15, 0]} />
+  return (
+    <group>
+      <ambientLight intensity={1.5} color='#fff' />
+      <Environment preset='forest' blur={100} />
+      <group ref={groupRef} rotation={[dtr(90), 0, 0]} position={[0, 0, 0]} />
+      <primitive object={modelScene} position={[0, 0, 1]} scale={[1, 1, 1]} />
+    </group>
+  )
 }
 
-class Particle {
+class Star {
   texture: THREE.Texture
   colors: string[]
   blinkAlphaDeg: number
@@ -52,13 +63,14 @@ class Particle {
   /** 초기 파티클 값 구현 **/
   constructor(texture: THREE.Texture) {
     this.texture = texture // 텍스쳐
-    this.colors = ['#ffbee4', '#ff81ef', '#ff93c3', '#ab87ff'] // 택스쳐 색상
+    this.colors = ['#DCD157', '#DCD157', '#F3DC2D', '#F3DC2D'] // 택스쳐 색상
     this.blinkAlphaDeg = randomIntBetween(0, 360) // 깜박거리게 만드는 범위지정시 사용되는 삼각함수 각도
     this.deg = randomIntBetween(0, 360) // x, y 위치를 정하기 위한 값
-    this.radius = randomNumBetween(0, 1)
+    this.radius = randomNumBetween(0.3, 0.4)
     this.radiusVel = randomNumBetween(0.985, 0.99)
   }
 
+  /** 맨 처음 파티클 값 생성시 **/
   create() {
     const material = new THREE.SpriteMaterial({
       map: this.texture,
@@ -66,28 +78,28 @@ class Particle {
       blending: THREE.AdditiveBlending,
       transparent: true,
       opacity: 1,
-      depthTest: false,
+      depthTest: true,
       rotation: (Math.PI / 180) * randomIntBetween(0, 360),
     })
 
     this.mesh = new THREE.Sprite(material)
-    this.mesh.scale.setScalar(randomNumBetween(0.05, 0.07))
-    this.setRandomPosition()
+    this.mesh.scale.setScalar(randomNumBetween(0.1, 0.14))
 
     const x = Math.cos((Math.PI / 180) * this.deg) * this.radius
     const y = Math.sin((Math.PI / 180) * this.deg) * this.radius
-    const z = randomNumBetween(0, 1)
+    const z = randomNumBetween(0, 3)
     this.mesh.position.set(x, y, z)
+
     return this.mesh
   }
 
   setRandomPosition() {
     this.deg = randomIntBetween(0, 360)
-    this.radius = randomNumBetween(1.3, 1.4)
+    this.radius = randomNumBetween(0.3, 0.4)
     this.radiusVel = randomNumBetween(0.99, 0.999)
     const x = Math.cos((Math.PI / 180) * this.deg) * this.radius
     const y = Math.sin((Math.PI / 180) * this.deg) * this.radius
-    const z = 2.2
+    const z = 0
     this.mesh?.position.set(x, y, z)
 
     if (this.mesh?.material.opacity) {
@@ -103,17 +115,13 @@ class Particle {
   }
   update() {
     if (this.mesh) {
-      this.radiusVel -= 0.00001
-      this.radius *= this.radiusVel * 0.999
-      this.mesh.position.x = Math.cos((Math.PI / 180) * this.deg) * this.radius * this.radius
-      this.mesh.position.y = Math.sin((Math.PI / 180) * this.deg) * this.radius * this.radius
-      this.mesh.position.z *= this.radiusVel
+      this.mesh.position.z += 0.03
       this.blinkAlphaDeg += 3
       this.mesh.material.opacity = 0.6 + 0.4 * Math.sin((this.blinkAlphaDeg * Math.PI) / 180)
     }
   }
-  isCenter() {
+  isOutside() {
     if (!this.mesh) return false
-    return this.mesh.position.z <= 0.08
+    return this.mesh.position.z > 3
   }
 }

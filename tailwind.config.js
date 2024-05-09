@@ -8,12 +8,7 @@ export default {
       NotoSansKR: ['Noto Sans KR', 'Arial', 'sans-serif'],
       NotoSansCJK: ['Noto Sans CJK KR', 'Arial', 'sans-serif'],
     },
-    colors: {
-    
-    },
-    borderRadius: {
-    
-    },
+
     extend: {
       transitionProperty: {
         width: 'width',

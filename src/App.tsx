@@ -7,7 +7,8 @@ const BoxPage = lazy(() => import('@src/pages/r3f/box.tsx'))
 const BubblePage = lazy(() => import('@src/pages/r3f/bubble/bubble.tsx'))
 const FlagPage = lazy(() => import('@src/pages/r3f/frag/flag.tsx'))
 const PortalPage = lazy(() => import('@src/pages/r3f/portal/portal.tsx'))
-const ParticlePage = lazy(() => import('@src/pages/r3f/particle.tsx'))
+const ParticlePage = lazy(() => import('@src/pages/r3f/particle/base.tsx'))
+const StarParticlePage = lazy(() => import('@src/pages/r3f/particle/star.tsx'))
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
         <Route path={'/r3f/flag'} element={<FlagPage />} />
         <Route path={'/r3f/portal'} element={<PortalPage />} />
         <Route path={'/r3f/particle'} element={<ParticlePage />} />
+        <Route path={'/r3f/particle/star'} element={<StarParticlePage />} />
       </Route>
       <Route path='/*' element={<NotFoundPage />} />
     </Routes>
