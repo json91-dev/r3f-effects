@@ -5,12 +5,15 @@ import { useEffect, useRef } from 'react'
 import { dtr, randomIntBetween, randomNumBetween } from '@src/utils/utils.tsx'
 import * as THREE from 'three'
 import { useFrame, useThree } from '@react-three/fiber'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 
-const count = 100 // 파티클 갯수
+const count = 200 // 파티클 갯수
 export default function StarParticles() {
   const { scene: modelScene }: any = useGLTF(starModel)
   const { scene } = useThree()
   const texture: any = useTexture(starParticleTexture)
+  const rootGroupRef = useRef<THREE.Group>(null!)
   const groupRef = useRef<THREE.Group>(null!)
   const instances = useRef<Star[]>([])
 
@@ -41,12 +44,16 @@ export default function StarParticles() {
     })
   })
 
+  useGSAP(() => {
+    gsap.to(rootGroupRef.current.position, { y: 2, duration: 2 })
+  }, [])
+
   return (
-    <group>
+    <group ref={rootGroupRef} position={[0, -4, 0]}>
       <ambientLight intensity={1.5} color='#fff' />
       <Environment preset='forest' blur={100} />
       <group ref={groupRef} rotation={[dtr(90), 0, 0]} position={[0, 0, 0]} />
-      <primitive object={modelScene} position={[0, 0, 1]} scale={[1, 1, 1]} />
+      <primitive object={modelScene} position={[0, 0, 0]} scale={[1.3, 1.3, 1.3]} />
     </group>
   )
 }
@@ -86,7 +93,7 @@ class Star {
     this.mesh.scale.setScalar(randomNumBetween(0.1, 0.14))
 
     const x = Math.cos((Math.PI / 180) * this.deg) * this.radius
-    const y = Math.sin((Math.PI / 180) * this.deg) * this.radius
+    const y = 0
     const z = randomNumBetween(0, 3)
     this.mesh.position.set(x, y, z)
 
@@ -98,7 +105,7 @@ class Star {
     this.radius = randomNumBetween(0.3, 0.4)
     this.radiusVel = randomNumBetween(0.99, 0.999)
     const x = Math.cos((Math.PI / 180) * this.deg) * this.radius
-    const y = Math.sin((Math.PI / 180) * this.deg) * this.radius
+    const y = 0
     const z = 0
     this.mesh?.position.set(x, y, z)
 
@@ -115,8 +122,8 @@ class Star {
   }
   update() {
     if (this.mesh) {
-      this.mesh.position.z += 0.03
-      this.blinkAlphaDeg += 3
+      this.mesh.position.z += 0.05
+      this.blinkAlphaDeg += 2
       this.mesh.material.opacity = 0.6 + 0.4 * Math.sin((this.blinkAlphaDeg * Math.PI) / 180)
     }
   }
