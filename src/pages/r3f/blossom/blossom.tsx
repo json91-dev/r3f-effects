@@ -1,26 +1,23 @@
 import { extend, ReactThreeFiber, useFrame, useLoader, useThree } from '@react-three/fiber'
 import React, { Suspense, useEffect, useLayoutEffect, useRef } from 'react'
-import { Environment, shaderMaterial, useTexture } from '@react-three/drei'
+import { Environment, shaderMaterial, useGLTF, useTexture } from '@react-three/drei'
 import * as THREE from 'three'
+import { Bloom } from '@react-three/postprocessing'
 
 import blossomObj from '@static/models/blossom.vert.2.obj'
-import blossomTexture1 from '@static/images/blossom.1.png'
 import blossomTexture2 from '@static/images/blossom.2.png'
-import blossomTexture3 from '@static/images/blossom.3.png'
 // @ts-ignore
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 import blossomVert from './blossom.vert'
 import blossomFrag from './blossom.frag'
-import { dtr } from '@src/utils/utils.tsx'
+import circleModel from '@static/models/circle.glb'
 
 export default function Blossoms() {
   const obj = useLoader(OBJLoader, blossomObj)
   const meshRef = useRef<THREE.Mesh>(null!)
-  const blossom1 = useTexture(blossomTexture1)
   const blossom2 = useTexture(blossomTexture2)
-  const blossom3 = useTexture(blossomTexture3)
-
   const { scene, camera } = useThree()
+  const { scene: modelScene }: any = useGLTF(circleModel)
 
   useEffect(() => {
     scene.background = new THREE.Color('black')
@@ -67,7 +64,12 @@ export default function Blossoms() {
 
   return (
     <Suspense fallback={null}>
+      <ambientLight intensity={1.5} color='#fff' />
       <Environment preset='forest' blur={100} />
+      <mesh ref={meshRef}>
+        <sphereGeometry args={[0.5, 32, 16]} />
+        <meshStandardMaterial color={'gray'} />
+      </mesh>
       <mesh ref={meshRef} position={[0, 0, 0]} rotation={[0, 0, 0]} scale={4} frustumCulled={false}>
         <blossomMaterial
           key={BlossomMaterial.key}

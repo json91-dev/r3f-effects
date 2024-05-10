@@ -17,7 +17,7 @@ void main() {
 
     particle_size = 0.15 * progress; // 0 ~ 0.15
     vec3 world_pos = pos;
-    float rotationTime = time * 1.5 * progress;
+    float rotationTime = time * 2.0 * progress;
     float moveToCenterTime = time * progress * 0.5;
 
 
@@ -32,6 +32,7 @@ void main() {
     /** 중앙으로 파티클 이동 **/
     vec3 moveVector = normalize(-world_pos) * fract(moveToCenterTime);
 
+    world_pos = world_pos + moveVector;
     /** 원점 이동시 원래 위치로 복귀 **/
     world_pos = mix(world_pos, world_pos, step(length(world_pos), 0.1));
 
