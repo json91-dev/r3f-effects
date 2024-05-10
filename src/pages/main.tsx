@@ -27,6 +27,10 @@ export default function MainPage() {
         <p onClick={() => navigate('/r3f/particle/star')} className={'border-2'}>
           (r3f) Particle Star 페이지 이동
         </p>
+
+        <p onClick={() => navigate('/r3f/blossom')} className={'border-2'}>
+          (r3f) Blossom 페이지 이동
+        </p>
       </div>
     </div>
   )
