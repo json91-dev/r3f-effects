@@ -32,7 +32,7 @@ export default function Flag() {
   })
 
   return (
-    <Suspense fallback={null}>
+    <>
       <group name={'portal-group'} ref={groupRef} position={[0, 0, -2]}>
         <mesh position={[0, 0, 0]} ref={portalRef} name='portal-outside' scale={2}>
           <planeGeometry args={[3, 3]} />
@@ -48,6 +48,6 @@ export default function Flag() {
           />
         </mesh>
       </group>
-    </Suspense>
+    </>
   )
 }

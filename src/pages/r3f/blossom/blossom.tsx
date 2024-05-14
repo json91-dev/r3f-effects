@@ -15,6 +15,7 @@ import circleModel from '@static/models/circle.glb'
 export default function Blossoms() {
   const obj = useLoader(OBJLoader, blossomObj)
   const meshRef = useRef<THREE.Mesh>(null!)
+  const ballMeshRef = useRef<THREE.Mesh>(null!)
   const blossom2 = useTexture(blossomTexture2)
   const { scene, camera } = useThree()
   const { scene: modelScene }: any = useGLTF(circleModel)
@@ -24,7 +25,8 @@ export default function Blossoms() {
     camera.position.set(0, 0, 10)
   }, [])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    console.log(meshRef.current)
     const particleGeo = new THREE.PlaneGeometry(1, 1)
     const geo = new THREE.InstancedBufferGeometry()
     geo.setAttribute('position', particleGeo.getAttribute('position'))
@@ -63,10 +65,10 @@ export default function Blossoms() {
   })
 
   return (
-    <Suspense fallback={null}>
+    <>
       <ambientLight intensity={1.5} color='#fff' />
       <Environment preset='forest' blur={100} />
-      <mesh ref={meshRef}>
+      <mesh ref={ballMeshRef}>
         <sphereGeometry args={[0.5, 32, 16]} />
         <meshStandardMaterial color={'gray'} />
       </mesh>
@@ -79,7 +81,7 @@ export default function Blossoms() {
           imageTexture={blossom2}
         />
       </mesh>
-    </Suspense>
+    </>
   )
 }
 

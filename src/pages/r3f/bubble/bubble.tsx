@@ -56,7 +56,7 @@ export default function Bubbles() {
   })
 
   return (
-    <Suspense fallback={null}>
+    <>
       <mesh ref={ref} position={[0, 0, 0]} scale={1} frustumCulled={false}>
         <bubbleMaterial
           key={BubbleMaterial.key}
@@ -66,7 +66,7 @@ export default function Bubbles() {
           imageTexture={imageTexture}
         />
       </mesh>
-    </Suspense>
+    </>
   )
 }
 
@@ -75,8 +75,10 @@ const BubbleMaterial: any = shaderMaterial(
   {
     time: 0, // 시간 유니폼
     imageTexture: null, // 텍스처 유니폼
-  }, bubbleVert, bubbleFrag)
-
+  },
+  bubbleVert,
+  bubbleFrag,
+)
 
 /** BubbleMaterial 셰이더를 React Three Fiber의 확장 요소로 등록 */
 declare global {

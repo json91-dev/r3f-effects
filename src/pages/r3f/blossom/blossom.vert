@@ -17,8 +17,8 @@ void main() {
 
     particle_size = 0.15 * progress; // 0 ~ 0.15
     vec3 world_pos = pos;
-    float rotationTime = time * 2.0 * progress;
-    float moveToCenterTime = time * progress * 0.5;
+    float rotationTime = time * 6.0 * progress;
+    float moveToCenterTime = time * progress * .5;
 
 
     /** 회전 적용 **/
