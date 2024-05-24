@@ -1,12 +1,13 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
-import { extend, ReactThreeFiber, useFrame } from '@react-three/fiber'
-import frag from '@src/pages/point-cloud/point-cloud.frag'
-import vert from '@src/pages/point-cloud/point-cloud.vert'
+import { extend, ReactThreeFiber, useFrame, useThree } from '@react-three/fiber'
+import frag from '@src/pages/shader-test/music.frag'
+import vert from '@src/pages/shader-test/music.vert'
 import { shaderMaterial } from '@react-three/drei'
-export default function PointCloud() {
+export default function Music() {
   const [points, setPoints] = useState<THREE.Vector3[]>([])
   const geoRef = useRef(null)
+  const { camera } = useThree()
 
   /** Vector 3 배열 만들기 **/
   useLayoutEffect(() => {
@@ -23,6 +24,10 @@ export default function PointCloud() {
     setPoints(points)
   }, [])
 
+  useEffect(() => {
+    camera.position.set(0, 0, 5)
+  }, [])
+
   const pointMaterialRef = useRef<any>()
 
   useFrame(({ clock }) => {
@@ -36,7 +41,7 @@ export default function PointCloud() {
   }
 
   return (
-    <group position={[0, 0, -3]} scale={[2, 2, 2]}>
+    <group position={[0, 0, 0]}>
       <points>
         <bufferGeometry>
           <bufferAttribute

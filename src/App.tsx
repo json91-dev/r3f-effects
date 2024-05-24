@@ -11,8 +11,9 @@ const ParticlePage = lazy(() => import('@src/pages/particle/base.tsx'))
 const StarParticlePage = lazy(() => import('@src/pages/particle/star.tsx'))
 const BlossomPage = lazy(() => import('@src/pages/blossom/blossom.tsx'))
 const RollingBallPage = lazy(() => import('@src/pages/mesh/rollingball.tsx'))
-const PointCloudPage = lazy(() => import('@src/pages/point-cloud/point-cloud.tsx'))
-const PointCloudHmrPage = lazy(() => import('@src/pages/point-cloud/point-cloud-hmr.tsx'))
+const PointCloudPage = lazy(() => import('@src/pages/shader-test/point-cloud.tsx'))
+const MusicPage = lazy(() => import('@src/pages/shader-test/music.tsx'))
+// const PointCloudHmrPage = lazy(() => import('@src/pages/shader-test/point-cloud-hmr.tsx'))
 
 export default function App() {
   return (
@@ -32,7 +33,8 @@ export default function App() {
         <Route path={'/blossom'} element={<BlossomPage />} />
         <Route path={'/rolling-ball'} element={<RollingBallPage />} />
         <Route path={'/point-cloud'} element={<PointCloudPage />} />
-        <Route path={'/point-cloud-hmr'} element={<PointCloudHmrPage />} />
+        <Route path={'/music'} element={<MusicPage />} />
+        {/*<Route path={'/point-cloud-hmr'} element={<PointCloudHmrPage />} />*/}
       </Route>
       <Route path='/*' element={<NotFoundPage />} />
     </Routes>

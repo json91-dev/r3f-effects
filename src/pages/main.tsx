@@ -43,6 +43,10 @@ export default function MainPage() {
         <p onClick={() => navigate('/point-cloud-hmr')} className={'border-2'}>
           (r3f) Point Cloud Hmr 페이지 이동
         </p>
+
+        <p onClick={() => navigate('/music')} className={'border-2'}>
+          (r3f) Music 페이지 이동
+        </p>
       </div>
     </div>
   )
