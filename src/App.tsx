@@ -3,16 +3,17 @@ import { lazy } from 'react'
 import ArCanvasLayout from '@src/layouts/ArCanvasLayout.tsx'
 import NotFoundPage from '@src/pages/nofFound.tsx'
 const MainPage = lazy(() => import('@src/pages/main.tsx'))
-const BoxPage = lazy(() => import('@src/pages/mesh/box.tsx'))
-const BubblePage = lazy(() => import('@src/pages/bubble/bubble.tsx'))
-const FlagPage = lazy(() => import('@src/pages/flag/flag.tsx'))
-const PortalPage = lazy(() => import('@src/pages/portal/portal.tsx'))
-const ParticlePage = lazy(() => import('@src/pages/particle/base.tsx'))
-const StarParticlePage = lazy(() => import('@src/pages/particle/star.tsx'))
-const BlossomPage = lazy(() => import('@src/pages/blossom/blossom.tsx'))
-const RollingBallPage = lazy(() => import('@src/pages/mesh/rollingball.tsx'))
-const PointCloudPage = lazy(() => import('@src/pages/shader-test/point-cloud.tsx'))
-const MusicPage = lazy(() => import('@src/pages/shader-test/music.tsx'))
+const BoxPage = lazy(() => import('@src/pages/normal/box.tsx'))
+const BubblePage = lazy(() => import('@src/pages/shader/bubble/bubble.tsx'))
+const FlagPage = lazy(() => import('@src/pages/shader/flag/flag.tsx'))
+const PortalPage = lazy(() => import('@src/pages/shader/portal/portal.tsx'))
+const ParticlePage = lazy(() => import('@src/pages/normal/base.tsx'))
+const StarParticlePage = lazy(() => import('@src/pages/normal/star.tsx'))
+const BlossomPage = lazy(() => import('@src/pages/shader/blossom/blossom.tsx'))
+const RollingBallPage = lazy(() => import('@src/pages/normal/rollingball.tsx'))
+const PointCloudPage = lazy(() => import('@src/pages/shader/point-cloud/point-cloud.tsx'))
+const MusicPage = lazy(() => import('@src/pages/shader/music/music.tsx'))
+const MergeStarPage = lazy(() => import('@src/pages/normal/merge-star.tsx'))
 // const PointCloudHmrPage = lazy(() => import('@src/pages/shader-test/point-cloud-hmr.tsx'))
 
 export default function App() {
@@ -24,17 +25,18 @@ export default function App() {
 
       <Route index element={<MainPage />} />
       <Route element={<ArCanvasLayout />}>
-        <Route path={'/box'} element={<BoxPage />} />
-        <Route path={'/bubble'} element={<BubblePage />} />
-        <Route path={'/flag'} element={<FlagPage />} />
-        <Route path={'/portal'} element={<PortalPage />} />
-        <Route path={'/particle'} element={<ParticlePage />} />
-        <Route path={'/particle/star'} element={<StarParticlePage />} />
-        <Route path={'/blossom'} element={<BlossomPage />} />
-        <Route path={'/rolling-ball'} element={<RollingBallPage />} />
-        <Route path={'/point-cloud'} element={<PointCloudPage />} />
-        <Route path={'/music'} element={<MusicPage />} />
-        {/*<Route path={'/point-cloud-hmr'} element={<PointCloudHmrPage />} />*/}
+        <Route path={'/shader/bubble'} element={<BubblePage />} />
+        <Route path={'/shader/flag'} element={<FlagPage />} />
+        <Route path={'/shader/portal'} element={<PortalPage />} />
+        <Route path={'/shader/blossom'} element={<BlossomPage />} />
+        <Route path={'/shader/point-cloud'} element={<PointCloudPage />} />
+        <Route path={'/shader/music'} element={<MusicPage />} />
+
+        <Route path={'/normal/box'} element={<BoxPage />} />
+        <Route path={'/normal/particle'} element={<ParticlePage />} />
+        <Route path={'/normal/particle-star'} element={<StarParticlePage />} />
+        <Route path={'/normal/rolling-ball'} element={<RollingBallPage />} />
+        <Route path={'/normal/merge-star'} element={<MergeStarPage />} />
       </Route>
       <Route path='/*' element={<NotFoundPage />} />
     </Routes>

@@ -1,8 +1,8 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { extend, ReactThreeFiber, useFrame } from '@react-three/fiber'
-import frag from '@src/pages/shader-test/point-cloud.frag'
-import vert from '@src/pages/shader-test/point-cloud.vert'
+import frag from '@src/pages/shader/point-cloud/point-cloud.frag'
+import vert from '@src/pages/shader/point-cloud/point-cloud.vert'
 import { shaderMaterial } from '@react-three/drei'
 export default function PointCloud() {
   const pointsRef = useRef<any>(null!)

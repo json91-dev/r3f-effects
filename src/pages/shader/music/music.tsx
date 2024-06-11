@@ -1,8 +1,8 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { extend, ReactThreeFiber, useFrame, useThree } from '@react-three/fiber'
-import frag from '@src/pages/shader-test/music.frag'
-import vert from '@src/pages/shader-test/music.vert'
+import frag from '@src/pages/shader/music/music.frag'
+import vert from '@src/pages/shader/music/music.vert'
 import { shaderMaterial } from '@react-three/drei'
 export default function Music() {
   const [points, setPoints] = useState<THREE.Vector3[]>([])
@@ -41,7 +41,7 @@ export default function Music() {
   }
 
   return (
-    <group position={[0, 0, 0]}>
+    <group position={[0, 0, 0]} scale={[1, 1, 1]}>
       <points>
         <bufferGeometry>
           <bufferAttribute
@@ -56,6 +56,14 @@ export default function Music() {
             attach={'attributes-index'}
             count={points.length}
             array={new Float32Array(points.map((_, i) => i))}
+            itemSize={1}
+            needsUpdate={true}
+          />
+
+          <bufferAttribute
+            attach={'attributes-random'}
+            count={points.length}
+            array={new Float32Array(points.map((_) => Math.random()))}
             itemSize={1}
             needsUpdate={true}
           />

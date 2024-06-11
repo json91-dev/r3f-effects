@@ -1,8 +1,8 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { useTexture } from '@react-three/drei'
 import towerImg from '@static/images/intro.bg.tower.jpg'
-import frag from '@src/pages/flag/flag.frag'
-import vert from '@src/pages/flag/flag.vert'
+import frag from '@src/pages/shader/flag/flag.frag'
+import vert from '@src/pages/shader/flag/flag.vert'
 import { useFrame } from '@react-three/fiber'
 
 export default function Flag() {

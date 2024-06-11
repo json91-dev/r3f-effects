@@ -9,6 +9,8 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
 const count = 200 // 파티클 갯수
+
+/** 별동별이 나오는 효과에 대한 데모 **/
 export default function StarParticles() {
   const { scene: modelScene }: any = useGLTF(starModel)
   const { scene } = useThree()
