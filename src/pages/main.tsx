@@ -25,6 +25,10 @@ export default function MainPage() {
           (r3f) Point Cloud 페이지 이동
         </p>
 
+        <p onClick={() => navigate('/shader/flower-dust')} className={'border-2'}>
+          (r3f) Flower Dust 페이지 이동
+        </p>
+
         <p onClick={() => navigate('/shader/music')} className={'border-2'}>
           (r3f) Music 페이지 이동
         </p>
