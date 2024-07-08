@@ -3,6 +3,8 @@ import { useMemo, useRef } from 'react'
 import { TextureLoader } from 'three'
 import { shaderMaterial } from '@react-three/drei'
 import * as THREE from 'three'
+import vert from './flower-dust.vert'
+import frag from './flower-dust.frag'
 
 export default function FlowerDust() {
   return (
@@ -14,8 +16,8 @@ export default function FlowerDust() {
 }
 
 function Stars() {
-  const ref = useRef()
-  const particleCount = 1000
+  const ref = useRef<THREE.Points>(null!)
+  const particleCount = 50
 
   const particles = useMemo(() => {
     const positions = new Float32Array(particleCount * 3)
@@ -23,16 +25,15 @@ function Stars() {
     const sizes = new Float32Array(particleCount)
     for (let i = 0; i < particleCount; i++) {
       // 초기 위치를 중앙으로 설정
-      positions[i * 3] = 0
-      positions[i * 3 + 1] = 0
-      positions[i * 3 + 2] = 0
+      positions[i * 3] = Math.random() * 25 - 12.5
+      positions[i * 3 + 1] = Math.random() * 60
+      positions[i * 3 + 2] = Math.random() * 25 - 12.5
 
       // 랜덤한 방향과 속도로 초기 속도 설정
       const angle = Math.random() * 2 * Math.PI
-      const speed = Math.random() * 2
-      velocities[i * 3] = Math.cos(angle) * speed
-      velocities[i * 3 + 1] = Math.sin(angle) * speed
-      velocities[i * 3 + 2] = Math.random() - 0.5 // z 축도 랜덤하게
+      velocities[i * 3] = Math.cos(angle) * 0.2
+      velocities[i * 3 + 1] = Math.random() + 0.4
+      velocities[i * 3 + 2] = Math.sin(angle) * 0.1 // z 축도 랜덤하게
 
       sizes[i] = Math.random() * 2 + 1 // size
     }
@@ -50,10 +51,15 @@ function Stars() {
         positions[i * 3 + 2] += velocities[i * 3 + 2]
 
         // y 축이 특정 값 아래로 내려가면 다시 중앙으로 초기화
-        if (positions[i * 3 + 1] < -100) {
-          positions[i * 3] = 0
+        if (positions[i * 3 + 1] > 60) {
+          const angle = Math.random() * 2 * Math.PI
+          velocities[i * 3] = Math.cos(angle) * 0.2
+          velocities[i * 3 + 1] = Math.random() + 0.4
+          velocities[i * 3 + 2] = Math.sin(angle) * 0.1 // z 축도 랜덤하게
+
+          positions[i * 3] = Math.random() * 25 - 12.5
           positions[i * 3 + 1] = 0
-          positions[i * 3 + 2] = 0
+          positions[i * 3 + 2] = Math.random() * 25 - 12.5
         }
       }
       ref.current.geometry.attributes.position.needsUpdate = true
@@ -76,37 +82,17 @@ function Stars() {
           itemSize={1}
         />
       </bufferGeometry>
-      <starMaterial attach={'material'} />
+
+      <starMaterial attach={'material'} depthTest={false} transparent={true} />
     </points>
   )
 }
 
-// WebGL 쉐이더 소스 코드
-const vertexShader = `
-attribute float size;
-varying vec3 vColor;
-void main() {
-  vColor = vec3(1.0, 1.0, 1.0); // 하얀색
-  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-  gl_PointSize = size * (300.0 / -mvPosition.z);
-  gl_Position = projectionMatrix * mvPosition;
-}
-`
-
-const fragmentShader = `
-uniform sampler2D pointTexture;
-varying vec3 vColor;
-void main() {
-  gl_FragColor = vec4(vColor, 1.0);
-  gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
-}
-`
-
 // 커스텀 쉐이더 재질 생성
 const StarMaterial: any = shaderMaterial(
   { pointTexture: new TextureLoader().load('/static/images/star.particle.origin.png') },
-  vertexShader,
-  fragmentShader,
+  vert,
+  frag,
 )
 
 /** BubbleMaterial 셰이더를 React Three Fiber의 확장 요소로 등록 */
