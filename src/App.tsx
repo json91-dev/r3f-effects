@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import { lazy } from 'react'
 import ArCanvasLayout from '@src/layouts/ArCanvasLayout.tsx'
 import NotFoundPage from '@src/pages/nofFound.tsx'
-import FlowerDust from '@src/pages/shader/flower-dust/flower-dust.tsx'
+import Stardust from '@src/pages/shader/stardust/stardust.tsx'
 const MainPage = lazy(() => import('@src/pages/main.tsx'))
 const BoxPage = lazy(() => import('@src/pages/normal/box.tsx'))
 const BubblePage = lazy(() => import('@src/pages/shader/bubble/bubble.tsx'))
@@ -32,7 +32,7 @@ export default function App() {
         <Route path={'/shader/blossom'} element={<BlossomPage />} />
         <Route path={'/shader/point-cloud'} element={<PointCloudPage />} />
         <Route path={'/shader/music'} element={<MusicPage />} />
-        <Route path={'/shader/flower-dust'} element={<FlowerDust />} />
+        <Route path={'/shader/stardust'} element={<Stardust />} />
 
         <Route path={'/normal/box'} element={<BoxPage />} />
         <Route path={'/normal/particle'} element={<ParticlePage />} />

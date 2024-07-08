@@ -3,10 +3,10 @@ import { useMemo, useRef } from 'react'
 import { TextureLoader } from 'three'
 import { shaderMaterial } from '@react-three/drei'
 import * as THREE from 'three'
-import vert from './flower-dust.vert'
-import frag from './flower-dust.frag'
+import vert from './stardust.vert'
+import frag from './stardust.frag'
 
-export default function FlowerDust() {
+export default function Stardust() {
   return (
     <group rotation={[THREE.MathUtils.degToRad(180), 0, 0]} scale={[0.1, 0.1, 0.1]} position={[0, 0, -10]}>
       <ambientLight intensity={0.5} />
