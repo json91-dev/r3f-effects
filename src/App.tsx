@@ -3,6 +3,7 @@ import { lazy } from 'react'
 import ArCanvasLayout from '@src/layouts/ArCanvasLayout.tsx'
 import NotFoundPage from '@src/pages/nofFound.tsx'
 import Stardust from '@src/pages/shader/stardust/stardust.tsx'
+import TwinkleParticles from '@src/pages/shader/twinkle-particles/TwinkleParticles.tsx'
 const MainPage = lazy(() => import('@src/pages/main.tsx'))
 const BoxPage = lazy(() => import('@src/pages/normal/box.tsx'))
 const BubblePage = lazy(() => import('@src/pages/shader/bubble/bubble.tsx'))
@@ -15,6 +16,7 @@ const RollingBallPage = lazy(() => import('@src/pages/normal/rollingball.tsx'))
 const PointCloudPage = lazy(() => import('@src/pages/shader/point-cloud/point-cloud.tsx'))
 const MusicPage = lazy(() => import('@src/pages/shader/music/music.tsx'))
 const MergeStarPage = lazy(() => import('@src/pages/normal/merge-star.tsx'))
+const UniversePage = lazy(() => import('@src/pages/shader/universe/universe.tsx'))
 // const PointCloudHmrPage = lazy(() => import('@src/pages/shader-test/point-cloud-hmr.tsx'))
 
 export default function App() {
@@ -33,6 +35,8 @@ export default function App() {
         <Route path={'/shader/point-cloud'} element={<PointCloudPage />} />
         <Route path={'/shader/music'} element={<MusicPage />} />
         <Route path={'/shader/stardust'} element={<Stardust />} />
+        <Route path={'/shader/universe'} element={<UniversePage />} />
+        <Route path={'/shader/twink-particle'} element={<TwinkleParticles />} />
 
         <Route path={'/normal/box'} element={<BoxPage />} />
         <Route path={'/normal/particle'} element={<ParticlePage />} />
